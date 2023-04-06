@@ -3,7 +3,7 @@ from rosbags.rosbag1 import Reader
 from rosbags.serde import deserialize_cdr, ros1_to_cdr
 import numpy as np
 
-sys.path.insert(0, '/home/torsten/cpp/build/aru_sil_core/lib/')
+#sys.path.insert(0, '/home/torsten/cpp/build/aru_sil_core/lib/')
 import aru_py_logger
 
 def main():
@@ -37,6 +37,7 @@ def main():
             av = np.array([av.x, av.y, av.z], dtype=np.float32)
 
             logger.write_to_file(timestamp, la, av)
+            print (timestamp, la, av)
 
 
 if __name__ == "__main__":
