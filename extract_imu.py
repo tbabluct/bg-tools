@@ -23,13 +23,14 @@ def main():
         for connection, timestamp, rawdata in reader.messages(connections=connections):
             msg = deserialize_cdr(rawdata, connection.msgtype)
 
-            timestamp = msg.header.stamp.sec + (msg.header.stamp.nanosec // 1_000_000)
+            timestamp = msg.header.stamp.sec * 1000 + (msg.header.stamp.nanosec // 1_000_000)
 
             la = msg.linear_acceleration
             la = np.array([la.x, la.y, la.z], dtype=np.float32)
 
             av = msg.angular_velocity
             av = np.array([av.x, av.y, av.z], dtype=np.float32)
+            av = av / 57.29578 # The ZED imu 
 
             logger.write_to_file(timestamp, la, av)
             print (timestamp, la[0], la[1], la[2], av[0], av[1], av[2], sep=",")

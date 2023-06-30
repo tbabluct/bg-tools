@@ -70,7 +70,7 @@ def main():
             print(msg.vel_n, msg.vel_e, msg.vel_d, sep=",")
 
             
-            timestamp = msg.header.stamp.sec + (msg.header.stamp.nanosec // 1_000_000)
+            timestamp = msg.header.stamp.sec * 1000 + (msg.header.stamp.nanosec // 1_000_000)
             logger.set_timestamp(timestamp)
             logger.set_latitude(msg.lat)
             logger.set_longitude(msg.lon)

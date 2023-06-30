@@ -7,8 +7,8 @@ import numpy as np
 import aru_py_logger
 
 def main():
-    if len(sys.argv) != 2:
-        print("Useage: " + sys.argv[0] + " path/to/bag/")
+    if len(sys.argv) != 3:
+        print("Useage: " + sys.argv[0] + " path/to/bag/ topic")
         exit(1)
 
     bag_file_name = sys.argv[1]
@@ -26,11 +26,11 @@ def main():
     last_timestamp = 0
 
     with Reader(bag_file_name) as reader:
-        connections = [x for x in reader.connections if x.topic == '/vo/tf2']
+        connections = [x for x in reader.connections if x.topic == sys.argv[2]]
         for connection, timestamp, rawdata in reader.messages(connections=connections):
             msg = deserialize_cdr(rawdata, connection.msgtype)
 
-            timestamp = msg.header.stamp.sec + (msg.header.stamp.nanosec // 1_000_000)
+            timestamp = msg.header.stamp.sec * 1000 + (msg.header.stamp.nanosec // 1_000_000)
 
             t = msg.transform.translation
             rot = msg.transform.rotation
