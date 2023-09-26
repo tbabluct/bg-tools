@@ -30,7 +30,7 @@ def main():
 
             av = msg.angular_velocity
             av = np.array([av.x, av.y, av.z], dtype=np.float32)
-            av = av / 57.29578 # The ZED imu 
+            # av = av / 57.29578 # The ZED imu 
 
             logger.write_to_file(timestamp, la, av)
             print (timestamp, la[0], la[1], la[2], av[0], av[1], av[2], sep=",")
