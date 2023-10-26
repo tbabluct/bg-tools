@@ -58,7 +58,7 @@ def main():
     output_path = bag_path + "ublox_gnss.monolithic"
     logger = aru_py_logger.GnssLogger(output_path, True)
 
-    print("sec,nanosec,lat,lon,alt,vel_n,vel_e,vel_d")
+    print("sec,nanosec,lat,lon,alt,vel_n,vel_e,vel_d,h_acc")
     # create reader instance and open for reading
     with Reader(bag_path) as reader:
         # messages() accepts connection filters
@@ -67,7 +67,7 @@ def main():
             msg = deserialize_cdr(rawdata, connection.msgtype)
             print(msg.header.stamp.sec, msg.header.stamp.nanosec, end=",", sep=",")
             print(msg.lat, msg.lon, msg.height, sep=",", end=",")
-            print(msg.vel_n, msg.vel_e, msg.vel_d, sep=",")
+            print(msg.vel_n, msg.vel_e, msg.vel_d, msg.h_acc, sep=",")
 
             
             timestamp = msg.header.stamp.sec * 1000 + (msg.header.stamp.nanosec // 1_000_000)
