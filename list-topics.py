@@ -1,5 +1,5 @@
 import sys
-from rosbags.rosbag2 import Reader
+from rosbags.rosbag1 import Reader
 
 # /imu_topic sensor_msgs/msg/Imu
 
