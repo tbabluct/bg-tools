@@ -10,20 +10,24 @@ def main():
     bag_file_name = sys.argv[1]
 
     print ("sec,nanosec,", end="")
-    print("x,y,z", end="")
-    #print("av_x,av_y,av_z", end="")
+    print("latitude,longitude,altitude,", end="")
+    print("position_covariance,position_covariance_type", end="")
     print("\n", end="")
 
 
     with Reader(bag_file_name) as reader:
-        connections = [x for x in reader.connections if x.topic == '/gps/fix/odometry']
+        connections = [x for x in reader.connections if x.topic == '/piksi/navsatfix_best_fix']
         for connection, timestamp, rawdata in reader.messages(connections=connections):
             msg = deserialize_cdr(ros1_to_cdr(rawdata, connection.msgtype), connection.msgtype)
             print(msg.header.stamp.sec, ",", end="", sep="")
             print(msg.header.stamp.nanosec, ",", end="", sep="")
 
-            pos = msg.pose.pose.position
-            print(pos.x, pos.y, pos.z, sep=",")
+            
+            print(msg.latitude, msg.longitude, msg.altitude, end="", sep=",")
+            print(",", end="")
+
+            print(msg.position_covariance, msg.position_covariance_type, end="", sep=",")
+            print("\n", end="")
 
 
 if __name__ == "__main__":

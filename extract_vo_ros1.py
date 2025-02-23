@@ -4,7 +4,7 @@ from rosbags.serde import deserialize_cdr, ros1_to_cdr
 import numpy as np
 
 #sys.path.insert(0, '/home/torsten/cpp/build/aru_sil_core/lib/')
-#import aru_py_logger
+import aru_py_logger
 
 def main():
     if len(sys.argv) != 3:
@@ -12,11 +12,13 @@ def main():
         exit(1)
 
     bag_file_name = sys.argv[1]
+    working_dir = '/'.join(bag_file_name.split('/')[:-1]) + '/'
     topic_name = sys.argv[2]
 
-    monolithic_filename = bag_file_name[:-4] + "/" + topic_name.replace("/", "_") + ".monolithic"
+    monolithic_filename = topic_name.replace("/", "_") + ".monolithic"
+    monolithic_filename = working_dir + monolithic_filename
 
-    #logger = aru_py_logger.TransformLogger(monolithic_filename, True)
+    logger = aru_py_logger.TransformLogger(monolithic_filename, True)
     print("timestamp,t_x,t_y,t_z,r_x,r_y,r_z,r_w")
     """
     void TransformLogger::WriteToFile(
@@ -43,7 +45,7 @@ def main():
                  [0,0,0,1]])
             # https://en.wikipedia.org/wiki/Rotation_matrix#General_rotations
 
-            #logger.write_to_file(transform, last_timestamp, timestamp)
+            logger.write_to_file(transform, last_timestamp, timestamp)
             last_timestamp = timestamp
             print (timestamp, t.x, t.y, t.z, rot.x, rot.y, rot.z, rot.w, sep=",")
 

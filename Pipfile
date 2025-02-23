@@ -4,7 +4,6 @@ verify_ssl = true
 name = "pypi"
 
 [packages]
-rosbags = "*"
 jupyter = "*"
 jupyterlab = "*"
 matplotlib = "*"
@@ -12,9 +11,11 @@ numpy = "*"
 pandas = "*"
 ipython = "*"
 ipympl = "*"
+rosbags = "*"
+pypng = "*"
 
 [dev-packages]
 autopep8 = "*"
 
 [requires]
-python_version = "3.11"
+python_version = ">3.11"

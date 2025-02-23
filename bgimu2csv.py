@@ -16,7 +16,7 @@ def main():
 
 
     with Reader(bag_file_name) as reader:
-        connections = [x for x in reader.connections if x.topic == '/imu_topic']
+        connections = [x for x in reader.connections if x.topic == '/microstrain/imu/data']
         for connection, timestamp, rawdata in reader.messages(connections=connections):
             msg = deserialize_cdr(ros1_to_cdr(rawdata, connection.msgtype), connection.msgtype)
             print(msg.header.stamp.sec, ",", end="", sep="")
